@@ -34,9 +34,33 @@ namespace cat
 			return *this;
 		}
 
+		template<typename T>
+		friend tp<T> New(T);
+		template<typename T>
+		friend void Delete(tp<T>);
+
 	private:
+		tp(T* pData)
+			: m_pData{ pData }
+		{
+		}
+
 		T* m_pData;
 	};
+
+	//friend functions
+	template<typename T>
+	tp<T> New(T data = T{})
+	{
+		return tp<T>{ new T{ data } };
+	}
+	template<typename T>
+	void Delete(tp<T> trainingPointer)
+	{
+		delete trainingPointer.m_pData;
+	}
+
+
 #ifndef USING_TRAINING_POINTER
 }
 #endif // !USING_TRAINING_POINTER
