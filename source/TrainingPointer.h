@@ -34,6 +34,15 @@ namespace cat
 			return *this;
 		}
 
+		tp(std::nullptr_t = nullptr)
+			: m_pData{ nullptr }
+		{
+		}
+		tp<T>& operator=(std::nullptr_t)
+		{
+			m_pData = nullptr;
+			return *this;
+		}
 		template<typename T>
 		friend tp<T> New(T);
 		template<typename T>
