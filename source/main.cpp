@@ -36,7 +36,7 @@ int main()
 {
     // Use the * operator to declare a pointer type
     // Use new to allocate and initialize memory
-    tp<MyClass> pmc = New<MyClass>({ 108, "Nick" });
+    tp<MyClass> pmc{ New<MyClass>(108, "Nick") };
 
     // Prints the memory address. Usually not what you want.
     std::cout << pmc << std::endl;

@@ -177,8 +177,8 @@ namespace cat
 		// |     friends     |
 		// +-----------------+
 
-		template<typename T>
-		friend tp<T> New(T);
+		template<typename T, typename... Args>
+		friend tp<T> New(Args&&...);
 		template<typename T>
 		friend void Delete(tp<T>);
 
@@ -187,10 +187,10 @@ namespace cat
 	};
 
 	//friend functions
-	template<typename T>
-	tp<T> New(T data = T{})
+	template<typename T, typename... Args>
+	tp<T> New(Args&&... args)
 	{
-		return tp<T>{ new T{ data } };
+		return tp<T>{ new T{ std::forward<Args>(args)... } };
 	}
 	template<typename T>
 	void Delete(tp<T> trainingPointer)
