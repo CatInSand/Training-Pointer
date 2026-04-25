@@ -56,6 +56,38 @@ namespace cat
 		{
 			return m_pData;
 		}
+
+		template<typename U>
+		bool operator==(const tp<U>& other) const
+		{
+			return m_pData == other.m_pData;
+		}
+		template<typename U>
+		bool operator!=(const tp<U>& other) const
+		{
+			return m_pData != other.m_pData;
+		}
+		template<typename U>
+		bool operator<(const tp<U>& other) const
+		{
+			return m_pData < other.m_pData;
+		}
+		template<typename U>
+		bool operator>(const tp<U>& other) const
+		{
+			return m_pData > other.m_pData;
+		}
+		template<typename U>
+		bool operator<=(const tp<U>& other) const
+		{
+			return m_pData <= other.m_pData;
+		}
+		template<typename U>
+		bool operator>=(const tp<U>& other) const
+		{
+			return m_pData >= other.m_pData;
+		}
+
 		template<typename T>
 		friend tp<T> New(T);
 		template<typename T>
