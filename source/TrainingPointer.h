@@ -43,6 +43,19 @@ namespace cat
 			m_pData = nullptr;
 			return *this;
 		}
+
+		T& operator[](int index)
+		{
+			return m_pData[index];
+		}
+		T& operator*(void)
+		{
+			return *m_pData;
+		}
+		T* operator->()
+		{
+			return m_pData;
+		}
 		template<typename T>
 		friend tp<T> New(T);
 		template<typename T>
