@@ -1,6 +1,8 @@
 #ifndef CAT_TRAINING_POINTER_H
 #define CAT_TRAINING_POINTER_H
 
+#include <ostream>
+
 #ifndef USING_TRAINING_POINTER
 namespace cat
 {
@@ -9,6 +11,9 @@ namespace cat
 	class tp final
 	{
 	public:
+		// +-----------------+
+		// |  Constructors   |
+		// +-----------------+
 		tp(T* pData)
 			: m_pData{ pData }
 		{
@@ -17,6 +22,20 @@ namespace cat
 			: m_pData{ other.m_pData }
 		{
 		}
+		tp(tp<T>&& other) noexcept
+			: m_pData{ std::move(other.m_pData) }
+		{
+		}
+		tp(std::nullptr_t = nullptr)
+			: m_pData{ nullptr }
+		{
+		}
+
+		// +-----------------+
+		// |    Operators    |
+		// +-----------------+
+		
+		//Assignment operators
 		tp<T>& operator=(const tp<T>& other)
 		{
 			if (this != &other)
@@ -24,10 +43,6 @@ namespace cat
 				m_pData = other.m_pData;
 			}
 			return *this;
-		}
-		tp(tp<T>&& other) noexcept
-			: m_pData{ std::move(other.m_pData) }
-		{
 		}
 		tp<T>& operator=(tp<T>&& other) noexcept
 		{
@@ -37,30 +52,69 @@ namespace cat
 			}
 			return *this;
 		}
-
-		tp(std::nullptr_t = nullptr)
-			: m_pData{ nullptr }
-		{
-		}
 		tp<T>& operator=(std::nullptr_t)
 		{
 			m_pData = nullptr;
 			return *this;
 		}
+		template<typename U>
+		tp<T>& operator=(const U& other)
+		{
+			m_pData = other;
+			return *this;
+		}
+		template<typename U>
+		tp<T>& operator+=(const U& other)
+		{
+			m_pData += other;
+			return *this;
+		}
+		template<typename U>
+		tp<T>& operator-=(const U& other)
+		{
+			m_pData -= other;
+			return *this;
+		}
 
-		T& operator[](int index)
+		//Increment/decrement operators
+		tp<T>& operator++()
 		{
-			return m_pData[index];
+			++m_pData;
 		}
-		T& operator*(void)
+		tp<T>& operator--()
 		{
-			return *m_pData;
+			--m_pData;
 		}
-		T* operator->()
+		tp<T> operator++(int)
 		{
-			return m_pData;
+			m_pData++;
+		}
+		tp<T> operator--(int)
+		{
+			m_pData--;
 		}
 
+		//Arithmetic operators
+		tp<T> operator+() const
+		{
+			return *this;
+		}
+		tp<T> operator-() const
+		{
+			return { -m_pData };
+		}
+		template<typename U>
+		tp<T> operator+(const U& other) const
+		{
+			return m_pData + other;
+		}
+		template<typename U>
+		tp<T> operator-(const U& other) const
+		{
+			return m_pData - other;
+		}
+
+		//Comparison operators
 		template<typename U>
 		bool operator==(const tp<U>& other) const
 		{
@@ -91,6 +145,31 @@ namespace cat
 		{
 			return m_pData >= other.m_pData;
 		}
+
+		//Member access operators
+		template<typename U>
+		T& operator[](const U& index)
+		{
+			return m_pData[index];
+		}
+		T& operator*()
+		{
+			return *m_pData;
+		}
+		T* operator->()
+		{
+			return m_pData;
+		}
+
+		//Ostream operator
+		friend std::ostream& operator<<(std::ostream& os, const tp<T>& pointer)
+		{
+			return os << pointer.m_pData;
+		}
+
+		// +-----------------+
+		// |     friends     |
+		// +-----------------+
 
 		template<typename T>
 		friend tp<T> New(T);
