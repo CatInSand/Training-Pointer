@@ -9,6 +9,10 @@ namespace cat
 	class tp final
 	{
 	public:
+		tp(T* pData)
+			: m_pData{ pData }
+		{
+		}
 		tp(const tp<T>& other)
 			: m_pData{ other.m_pData }
 		{
@@ -94,11 +98,6 @@ namespace cat
 		friend void Delete(tp<T>);
 
 	private:
-		tp(T* pData)
-			: m_pData{ pData }
-		{
-		}
-
 		T* m_pData;
 	};
 
