@@ -9,8 +9,30 @@ namespace cat
 	class tp final
 	{
 	public:
-		tp();
-		~tp();
+		tp(const tp<T>& other)
+			: m_pData{ other.m_pData }
+		{
+		}
+		tp<T>& operator=(const tp<T>& other)
+		{
+			if (this != &other)
+			{
+				m_pData = other.m_pData;
+			}
+			return *this;
+		}
+		tp(tp<T>&& other) noexcept
+			: m_pData{ std::move(other.m_pData) }
+		{
+		}
+		tp<T>& operator=(tp<T>&& other) noexcept
+		{
+			if (this != &other)
+			{
+				m_pData = std::move(other.m_pData);
+			}
+			return *this;
+		}
 
 	private:
 		T* m_pData;
