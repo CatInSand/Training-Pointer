@@ -1,6 +1,12 @@
 #ifndef CAT_TRAINING_POINTER_H
 #define CAT_TRAINING_POINTER_H
 
+// pending features
+//	- Array support
+//  - Safety features
+// 
+// 
+
 #include <ostream>
 
 #ifndef USING_TRAINING_POINTER
